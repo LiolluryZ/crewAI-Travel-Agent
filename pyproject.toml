@@ -1,0 +1,32 @@
+[project]
+name = "travel-ai"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Olivier LE LAY",email = "olivier.lelay@zenika.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+
+dependencies= [
+    "python-dotenv >=1.0.1",
+    "langtrace-python-sdk >=3.8.0",
+    "crewai[tools] (==0.117.0)",
+    "multion>=1.1.0",
+    "requests (>=2.32.3,<3.0.0)",
+    "pytesseract (>=0.3.13,<0.4.0)",
+    "opencv-python (>=4.11.0.86,<5.0.0.0)",
+    "passporteye (>=2.2.2,<3.0.0)",
+]
+
+
+[project.scripts]
+step1 = 'travel_ai.step1.main:run'
+step2 = 'travel_ai.step2.main:run'
+step3 = 'travel_ai.step3.main:run'
+step4 = 'travel_ai.step4.main:run'
+step5 = 'travel_ai.step5.main:run'
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

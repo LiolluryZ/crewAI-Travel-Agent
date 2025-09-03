@@ -1,0 +1,130 @@
+macro_planning_task:
+  description: >
+    Create a comprehensive travel plan that includes all aspects of the trip, from departure to return.
+    The plan should include details about the itinerary.
+    The plan should NOT include details about the accommodations and activities.
+    Focus on creating a macroscopic itinerary with 2 or 3 main cities that are central points of tourism,
+    allowing access to the most interesting tourist elements.
+    Utilize internet search tools, scrap website tool and all other engines to gather the informations.
+    You MUST ask user to validate your main choices.
+    When you choice transportation, be careful to choose single trip or round trip depending on the circumstances.
+    
+    Traveler's information:
+
+    - origin: {original_country}
+
+    - destination: {destination_country}
+    
+    - date: {date}
+
+  expected_output: >
+    A detailed travel plan that includes the following information:
+    - Departure and return dates
+    - Itinerary with 2 or 3 main cities
+    - Transportation details (flights, trains, etc.)
+    - Estimated travel times between cities
+    - Budget considerations (if applicable)
+    - Any special notes or considerations for the traveler
+    - Current exchange rate in the country from EURO (fresh data)
+    - All transports prices
+  agent: macro_trip_planner
+
+activity_planning_task:
+  description: >
+    Research and find cool things to do at {city}.
+    Focus on activities and events that match the traveler's interests and age group.
+    Utilize internet search tools and recommendation engines to gather the information.
+    Ask the user for their preferences with yes or no atomic questions.
+    DO NOT propose only one activity type.
+
+
+    Traveler's information:
+
+    - destination: {city}
+    
+    - country : {destination_country}
+    
+    - date: {date}
+
+  expected_output: >
+    A list of recommended activities and events for each day of the trip.
+    Propose between 10 and 15 activities.
+    Each entry should include the activity name, location, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the activities.
+    For each activity, provide a link to the booking page or website for more information.
+    You MUST provide from_city with exactly same string as city destination given before.
+  agent: activity_planner
+
+
+food_research_task:
+  description: >
+    Research and find nice places to eat at {city}.
+    Focus on restaurants, cafes, and local food experiences like street food that match the traveler's interests.
+    Utilize internet search tools and recommendation engines to gather the information.
+    Ask the user for their preferences with yes or no atomic questions (at least 4 questions).
+    
+    
+    Traveler's information:
+
+    - destination: {city} 
+    
+    - country: {destination_country}
+    
+    - date: {date}
+
+  expected_output: >
+    A list of recommended places to eat for each day of the trip.
+    Propose between 10 and 15 places.
+    Each entry should include the restaurant name, location address, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the restaurants.
+    For each place, provide a link to the website for more information.
+    You MUST provide from_city with exactly same string as city destination given before.
+  agent: food_planner
+
+accommodation_planning_task:
+  description: >
+    Research and find cool and well-placed accommodation at {city}.
+    Focus on hotels, hostels, and other lodging options that match the traveler's interests and age group.
+    Utilize internet search tools and recommendation engines to gather the information.
+    Ask the user for their preferences with yes or no atomic questions.
+
+    Traveler's information:
+
+    - destination: {city} in {destination_country}
+    
+    - date: {date}
+
+  expected_output: >
+    A list of recommended accommodations for each day of the trip.
+    Propose between 5 and 10 places.
+    Each entry should include the accommodation name, location, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the accommodations.
+    For each recommended accommodations, provide a link to the booking page or website for more information.
+    You MUST provide from_city with exactly same string as city destination given before.
+  agent: accommodation_planner
+
+
+check_border_task:
+  description: >
+    Provide and check information about border crossing requirements and regulations.
+    Focus on visa requirements, customs regulations, and other travel-related legalities.
+    Utilize internet search tools and passport reader engines to gather and check the information.
+    You MUST ask the user for needed travelers information's with atomic questions.
+    You MUST use passport reader to check all travelers information's.
+    Do NOT forget to check all travelers information's, there may be more than one traveler.
+    Do NOT ask for border or custom information, make your own research.
+
+    Traveler's information:
+
+    - origin: {original_country}
+
+    - destination: {destination_country}
+    
+    - date: {date}
+    
+    - number of traveler: {traveler_count}
+
+  expected_output: >
+    For each traveler, a synthetic report on border crossing requirements and regulations.
+    Each array entry should include the passport validation, visa requirements, customs regulations, and any other travel-related legalities.
+  agent: border_agent

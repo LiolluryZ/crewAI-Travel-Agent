@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voyage France → Vietnam</title>
+    <script defer src="app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-curve@1.0.0/leaflet.curve.js"></script>
+    <style>
+      #mapModal.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 via-white to-orange-100 text-gray-800">
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold mb-2">🌏 Voyage France → Vietnam (2025)</h1>
+        <p class="text-lg">2 voyageurs | Monnaie locale : <span id="currency">...</span></p>
+      </header>
+
+      <!-- Google Map -->
+      <div class="map w-full h-96 mb-10 rounded-lg overflow-hidden shadow">
+        <div id="openstreetmap" style="height: 400px; width: 100%;"></div>
+      </div>
+
+      <!-- Transport -->
+      <section class="mt-10">
+        <h2 class="text-2xl font-semibold mb-4">✈️ Transports</h2>
+        <div id="transports" class="grid md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <section id="customs" class="mb-8 mt-10">
+        <h2 class="text-2xl font-semibold mb-4 flex items-center justify-between">
+          <span>🛃 Douane</span>
+          <button id="toggleCustoms" class="text-blue-600 hover:text-blue-800">
+            ▼
+          </button>
+        </h2>
+        <div id="customs-content" class="grid grid-cols-2 gap-4">
+          <!-- Les informations douanières seront insérées ici -->
+        </div>
+      </section>
+
+      <!-- Ville -->
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">🏙️ Itinéraire</h2>
+        <div id="cities" class="grid md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Activités -->
+      <section class="mt-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-semibold mb-4">🎯 Activités recommandées</h2>
+          <button data-type="act" class="open-map-btn bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">Voir sur la carte</button>
+        </div>
+        <div id="activities" class="grid md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Hébergement -->
+      <section class="mt-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-semibold mb-4">🏨 Hébergements</h2>
+          <button data-type="acc" class="open-map-btn bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">Voir sur la carte</button>
+        </div>
+        <div id="accommodations" class="grid md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Nourriture -->
+      <section class="mt-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-semibold mb-4">🍜 À goûter</h2>
+          <button data-type="food" class="open-map-btn bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">Voir sur la carte</button>
+        </div>
+        <div id="foods" class="grid md:grid-cols-3 gap-4"></div>
+      </section>
+
+      <!-- Infos pratiques -->
+      <section class="mt-10">
+        <h2 class="text-2xl font-semibold mb-4">🧾 Infos pratiques</h2>
+        <ul id="tips" class="list-disc pl-6 space-y-2"></ul>
+      </section>
+    </div>
+
+    <!-- 🌍 Modal Map Container -->
+    <div id="mapModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl max-w-3xl w-full h-[500px] relative">
+        <button id="closeMapModal" class="absolute top-2 right-2 text-gray-600 hover:text-black font-bold text-5xl" style="z-index: 1000">&times;</button>
+        <div id="categoryMap" class="w-full h-full"></div>
+      </div>
+    </div>
+  </body>
+</html>

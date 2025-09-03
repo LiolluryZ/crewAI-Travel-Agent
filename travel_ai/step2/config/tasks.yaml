@@ -1,0 +1,70 @@
+macro_planning_task:
+  description: >
+    Create a comprehensive travel plan that includes all aspects of the trip, from departure to return.
+    The plan should include details about the itinerary and activities.
+    The plan should NOT include details about the accommodations and activities.
+    Focus on creating a macroscopic itinerary with 2 or 3 main cities that are central points of tourism,
+    allowing access to the most interesting tourist elements.
+    
+    Traveler's information:
+
+    - origin: {original_country}
+
+    - destination: {destination_country}
+
+  expected_output: >
+    A detailed travel plan that includes the following information:
+    - Departure and return dates
+    - Itinerary with 2 or 3 main cities
+    - Transportation details (flights, trains, etc.)
+    - Estimated travel times between cities
+    - Budget considerations (if applicable)
+    - Any special notes or considerations for the traveler
+  agent: macro_trip_planner
+
+activity_planning_task:
+  description: >
+    Research and find cool things to do at {destination_country}.
+    Focus on activities and events that match the traveler's interests and age group.
+
+
+    Traveler's information:
+
+    - destination: {destination_country}
+
+  expected_output: >
+    A list of recommended activities and events for each day of the trip.
+    Each entry should include the activity name, location, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the activities.
+  agent: activity_planner
+
+
+food_research_task:
+  description: >
+    Research and find cool places to eat at {destination_country}.
+    Focus on restaurants, cafes, and local food experiences that match the traveler's interests and age group.
+
+    Traveler's information:
+
+    - destination: {destination_country}
+
+  expected_output: >
+    A list of recommended places to eat for each day of the trip.
+    Each entry should include the restaurant name, location, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the restaurants.
+  agent: food_planner
+
+accommodation_planning_task:
+  description: >
+    Research and find cool and well-placed accommodation at {destination_country}.
+    Focus on hotels, hostels, and other lodging options that match the traveler's interests and age group.
+
+    Traveler's information:
+
+    - destination: {destination_country}
+
+  expected_output: >
+    A list of recommended accommodations for each day of the trip.
+    Each entry should include the accommodation name, location, a brief description, and why it's suitable for the traveler.
+    And potential reviews and ratings of the accommodations.
+  agent: accommodation_planner
