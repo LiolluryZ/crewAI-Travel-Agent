@@ -6,4 +6,5 @@ poetry-installer*
 .idea
 db
 output
+.env
 **/__pycache__

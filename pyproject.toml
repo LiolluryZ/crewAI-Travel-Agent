@@ -20,7 +20,7 @@ dependencies= [
 ]
 
 
-[project.scripts]
+[tool.poetry.scripts]
 step1 = 'travel_ai.step1.main:run'
 step2 = 'travel_ai.step2.main:run'
 step3 = 'travel_ai.step3.main:run'
