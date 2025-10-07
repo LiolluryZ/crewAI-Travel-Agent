@@ -39,7 +39,7 @@ activity_planning_task:
     Traveler's information:
 
     - destination: {destination_country}
-    
+
     - date: {date}
 
   expected_output: >
@@ -55,12 +55,12 @@ food_research_task:
     Focus on restaurants, cafes, and local food experiences like street food that match the traveler's interests.
     Utilize internet search tools and recommendation engines to gather the information.
     Ask the user for their preferences with yes or no atomic questions (at least 4 questions).
-    
-    
+
+
     Traveler's information:
 
     - destination: {destination_country}
-    
+
     - date: {date}
 
   expected_output: >
@@ -79,7 +79,7 @@ accommodation_planning_task:
     Traveler's information:
 
     - destination: {destination_country}
-    
+
     - date: {date}
 
   expected_output: >
@@ -104,9 +104,9 @@ check_border_task:
     - origin: {original_country}
 
     - destination: {destination_country}
-    
+
     - date: {date}
-    
+
     - number of traveler: {traveler_count}
 
   expected_output: >

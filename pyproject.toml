@@ -11,7 +11,11 @@ requires-python = ">=3.10,<3.13"
 dependencies= [
     "python-dotenv >=1.0.1",
     "langtrace-python-sdk >=3.8.0",
-    "crewai[tools] (==0.117.0)",
+    "crewai[tools] (==0.126.0)",
+    "crewai-tools[mcp]",
+    "mcp",
+    "mcpadapt",
+    "python-dotenv (>= 1.1.1)",
     "multion>=1.1.0",
     "requests (>=2.32.3,<3.0.0)",
     "pytesseract (>=0.3.13,<0.4.0)",
@@ -25,6 +29,7 @@ step1 = 'travel_ai.step1.main:run'
 step2 = 'travel_ai.step2.main:run'
 step3 = 'travel_ai.step3.main:run'
 step4 = 'travel_ai.step4.main:run'
+step4bis = 'travel_ai.step4bis.main:run'
 step5 = 'travel_ai.step5.main:run'
 
 [build-system]

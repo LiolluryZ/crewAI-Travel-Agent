@@ -1,17 +1,25 @@
-import glob
 import os
+
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, before_kickoff
-from crewai_tools import SerperDevTool, ScrapeWebsiteTool, WebsiteSearchTool
+from crewai_tools import ScrapeWebsiteTool, MCPServerAdapter
+from dotenv import load_dotenv
+from mcp import StdioServerParameters
+from mcp.client.streamable_http import StreamableHTTPTransport
 
-from travel_ai.step4.models.accommodation import AccommodationList
-from travel_ai.step4.models.activity import ActivityList
-from travel_ai.step4.models.check_border import CheckBorderList
-from travel_ai.step4.models.food import FoodList
-from travel_ai.step4.models.macro_planning import MacroPlanning
-from travel_ai.step4.tools.passport_tool import PassportTool
-from travel_ai.step4.tools.user_input_tool import UserInputTool
+from travel_ai.step4bis.models.accommodation import AccommodationList
+from travel_ai.step4bis.models.activity import ActivityList
+from travel_ai.step4bis.models.check_border import CheckBorderList
+from travel_ai.step4bis.models.food import FoodList
+from travel_ai.step4bis.models.macro_planning import MacroPlanning
+from travel_ai.step4bis.tools.passport_tool import PassportTool
+from travel_ai.step4bis.tools.user_input_tool import UserInputTool
 
+load_dotenv()
+
+SERPER_API_KEY = os.getenv('SERPER_API_KEY')
+
+print(SERPER_API_KEY)
 
 @CrewBase
 class TravelCrew():
@@ -23,6 +31,18 @@ class TravelCrew():
         self.date = date
         self.traveler_count = traveler_count
         pass
+
+    # MCP server parameters for Serper API via Docker
+    mcp_server_params = StdioServerParameters(
+        command="docker",
+        args=["run", "-i", "--rm",
+              "-e", "SERPER_API_KEY=" + SERPER_API_KEY,
+              "mcp-server-serper"]
+    )
+
+    # Create MCP server adapter to access Serper tools
+    mcp_adapter = MCPServerAdapter(mcp_server_params)
+    mcp_tools = mcp_adapter.tools
 
     @before_kickoff
     def prepare_inputs(self, inputs):
@@ -38,7 +58,7 @@ class TravelCrew():
             config=self.agents_config['macro_trip_planner'],
             verbose=True,
             tools=[
-                SerperDevTool(),
+                *self.mcp_tools,  # Unpack MCP tools from Serper
                 UserInputTool(),
                 ScrapeWebsiteTool()
             ]
@@ -50,7 +70,7 @@ class TravelCrew():
             config=self.agents_config['activity_planner'],
             verbose=True,
             tools=[
-                SerperDevTool(),
+                *self.mcp_tools,
                 UserInputTool(),
                 ScrapeWebsiteTool()
             ]
@@ -62,7 +82,7 @@ class TravelCrew():
             config=self.agents_config['food_planner'],
             verbose=True,
             tools=[
-                SerperDevTool(),
+                *self.mcp_tools,
                 UserInputTool(),
                 ScrapeWebsiteTool()
             ]
@@ -74,7 +94,7 @@ class TravelCrew():
             config=self.agents_config['accommodation_planner'],
             verbose=True,
             tools=[
-                SerperDevTool(),
+                *self.mcp_tools,
                 UserInputTool(),
                 ScrapeWebsiteTool()
             ]
@@ -86,7 +106,7 @@ class TravelCrew():
             config=self.agents_config['border_agent'],
             verbose=True,
             tools=[
-                SerperDevTool(),
+                *self.mcp_tools,
                 UserInputTool(),
                 ScrapeWebsiteTool(),
                 PassportTool()
