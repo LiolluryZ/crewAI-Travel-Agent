@@ -4,8 +4,6 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, before_kickoff
 from crewai_tools import ScrapeWebsiteTool, MCPServerAdapter
 from dotenv import load_dotenv
-from mcp import StdioServerParameters
-from mcp.client.streamable_http import StreamableHTTPTransport
 
 from travel_ai.step4bis.models.accommodation import AccommodationList
 from travel_ai.step4bis.models.activity import ActivityList
@@ -18,6 +16,7 @@ from travel_ai.step4bis.tools.user_input_tool import UserInputTool
 load_dotenv()
 
 SERPER_API_KEY = os.getenv('SERPER_API_KEY')
+GATEWAY_KEY = os.getenv('GATEWAY_KEY')
 
 print(SERPER_API_KEY)
 
@@ -33,15 +32,16 @@ class TravelCrew():
         pass
 
     # MCP server parameters for Serper API via Docker
-    mcp_server_params = StdioServerParameters(
-        command="docker",
-        args=["run", "-i", "--rm",
-              "-e", "SERPER_API_KEY=" + SERPER_API_KEY,
-              "mcp-server-serper"]
-    )
+    server_params = {
+        "url": "http://localhost:4444/sse",
+        "transport": "sse",
+        "headers": {
+            "Authorization": f"Bearer {GATEWAY_KEY}"
+        }
+    }
 
     # Create MCP server adapter to access Serper tools
-    mcp_adapter = MCPServerAdapter(mcp_server_params)
+    mcp_adapter = MCPServerAdapter(server_params)
     mcp_tools = mcp_adapter.tools
 
     @before_kickoff
